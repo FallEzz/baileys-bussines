@@ -7,8 +7,9 @@ export declare const makeMessagesRecvSocket: (config: SocketConfig) => {
     sendMessageAck: ({ tag, attrs, content }: BinaryNode) => Promise<void>;
     sendRetryRequest: (node: BinaryNode, forceIncludeKeys?: boolean) => Promise<void>;
     offerCall: (toJid: string, isVideo?: boolean) => Promise<{
-        id: string;
-        to: string;
+        callId: string;
+        toJid: string;
+        isVideo: boolean;
     }>;
     rejectCall: (callId: string, callFrom: string) => Promise<void>;
     getPrivacyTokens: (jids: string[]) => Promise<BinaryNode>;
@@ -94,9 +95,10 @@ export declare const makeMessagesRecvSocket: (config: SocketConfig) => {
     presenceSubscribe: (toJid: string, tcToken?: Buffer | undefined) => Promise<void>;
     profilePictureUrl: (jid: string, type?: "image" | "preview", timeoutMs?: number | undefined) => Promise<string | undefined>;
     onWhatsApp: (...jids: string[]) => Promise<{
-        exists: boolean;
         jid: string;
-    }[]>;
+        exists: unknown;
+        lid: unknown;
+    }[] | undefined>;
     fetchBlocklist: () => Promise<string[]>;
     fetchStatus: (jid: string) => Promise<{
         status: string | undefined;
@@ -124,7 +126,7 @@ export declare const makeMessagesRecvSocket: (config: SocketConfig) => {
     removeMessageLabel: (jid: string, messageId: string, labelId: string) => Promise<void>;
     star: (jid: string, messages: {
         id: string;
-        fromMe?: boolean | undefined;
+        fromMe?: boolean;
     }[], star: boolean) => Promise<void>;
     type: "md";
     ws: any;
